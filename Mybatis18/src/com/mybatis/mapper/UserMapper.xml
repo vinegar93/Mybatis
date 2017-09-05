@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- UserMapper.xml中的namespace等于UserDao接口地址 -->  
+<mapper namespace="com.mybatis.dao.UserDao">
+  <!-- 可以针对parameterType和resultType指定的类型定义一些别名，方便开发，例如int就是Integer的别名（默认），user是自定义的别名 -->
+  <select id="findUserById" parameterType="int" resultType="user">  
+    select * from user where id=#{id}
+  </select>
+  <select id="findUserByName" parameterType="java.lang.String" resultType="com.mybatis.bean.User">  
+    select * from user where name like '%${value}%'
+  </select>
+  <insert id="insertUser" parameterType="com.mybatis.bean.User">
+  	insert into user(id,name,password) value(#{id},#{name},#{password})
+  </insert>
+  <update id="updateUserById" parameterType="com.mybatis.bean.User">
+  	update user set name=#{name},password=#{password} where id=#{id}
+  </update>
+  <delete id="deleteUserById" parameterType="java.lang.Integer">
+  	delete from user where id=#{id}
+  </delete>
+</mapper>

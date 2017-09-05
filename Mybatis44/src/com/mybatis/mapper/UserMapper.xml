@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.UserMapper">
+
+  <!-- 开启本mapper的二级缓存 -->
+  <cache/>
+  <select id="findUserById1" parameterType="Integer" 
+  		resultType="com.mybatis.bean.User">  
+    select id,name,password from user where id=#{id}
+  </select>
+  
+  <!-- 在statement中设置useCache="false"（默认值是true），可以禁用当前select语句的二级缓存 -->
+  <select id="findUserById2" parameterType="Integer" 
+  		resultType="com.mybatis.bean.User" useCache="false">  
+    select id,name,password from user where id=#{id}
+  </select>
+  
+  <update id="updateUserById" parameterType="com.mybatis.bean.User">
+  	update user set name=#{name},password=#{password} where id=#{id}
+  </update>
+</mapper>

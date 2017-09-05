@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.mybatis.mapper.UserMapper">
+  <!-- 
+  	使用resultType进行输出映射，只有查询出来的列名和pojo中的属性名一致，该列才会映射成功
+  	不管是输出pojo单个对象，还是一个pojo对象列表（list包括pojo），在mapper.xml中，resultType指定的类型都是一样的，
+  	但是在mapper.java中，对应的方法返回值类型不一样，
+  	当输出pojo单个对象时，方法返回值是pojo；当输出pojo对象列表，方法返回值是List<pojo>
+  -->
+  <select id="findUserListById" parameterType="com.mybatis.bean.UserQueryVo" 
+  		resultType="com.mybatis.bean.UserCustomer">  
+    select id,name name_ from user where id=#{userCustomer.id}
+  </select>
+  
+  <!-- 查询出来的结果集只有一行且一列，可以使用简单类型进行输出映射 -->
+  <select id="findUserCountById" parameterType="com.mybatis.bean.UserQueryVo" 
+  		resultType="Integer">  
+    select count(*) from user where id=#{userCustomer.id}
+  </select>
+</mapper>

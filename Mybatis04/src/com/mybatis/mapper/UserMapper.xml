@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 命名空间namespace作用就是对sql进行分类化管理 -->
+<mapper namespace="test">
+  <!-- 
+  	id标识映射文件中的sql
+  	parameterType指定输入参数类型
+  	resultType指定输出结果所映射的java对象类型
+  	#{}表示一个占位符号，#{id}其中的id表示接收输入的参数的名称，如果输入参数是简单类型，#{}的参数名称可以任意
+  -->
+  <select id="findUserById" parameterType="int" resultType="com.mybatis.bean.User">  
+    select * from user where id=#{id}
+  </select>  
+  <!-- 
+  	${}表示拼接符号
+  	${}方式会引发SQL注入的问题，所以不建议使用
+  	${value}，接收输入参数的内容，如果传入参数是简单类型，${value}中只能使用value
+  -->
+  <select id="findUserByName" parameterType="java.lang.String" resultType="com.mybatis.bean.User">  
+    select * from user where name like '%${value}%'
+  </select>
+  <!--  
+  	parameterType指定输入参数类型是pojo
+  	#{}中指定pojo属性名
+  -->
+  <insert id="insertUser" parameterType="com.mybatis.bean.User">
+  	insert into user(id,name,password) value(#{id},#{name},#{password})
+  </insert>
+  <!-- parameterType指定user对象，包括id和更新信息，注意id必须存在 -->
+  <update id="updateUserById" parameterType="com.mybatis.bean.User">
+  	update user set name=#{name},password=#{password} where id=#{id}
+  </update>
+  <delete id="deleteUserById" parameterType="java.lang.Integer">
+  	delete from user where id=#{id}
+  </delete>
+</mapper>
